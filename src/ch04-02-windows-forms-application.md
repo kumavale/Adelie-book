@@ -1,5 +1,9 @@
 # Windows Forms Application
 
+<p align="center">
+    <img src="images/counter.gif" alt="counter gif" />
+</p>
+
 Adelieでは「プロパティ」をサポートしていないため、dllからプロパティを呼び出す際には「`set_`」または「`get_`」を接頭辞にする必要があります。また、イベントハンドラの追加には「`add_`」を接頭辞にします。  
 
 `.ctor()`は特別な名前であり、`extern`ブロック内でのみ宣言できます。これはdllからコンストラクタを呼び出すことができます。その他、`class`、`nested class`、継承も`extern`ブロック内でのみ使用可能です。

@@ -1,6 +1,17 @@
 [book]
 authors = ["kumavale"]
-language = "en"
+language = "ja"
 multilingual = false
 src = "src"
 title = "The Adelie Programming Language"
+
+[output.html]
+git-repository-url = "https://github.com/kumavale/Adelie-book"
+
+[output.html.fold]
+enable = true
+level = 1
+
+[output.html.playground]
+line-numbers = true
+runnable = false
