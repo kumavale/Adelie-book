@@ -12,7 +12,7 @@
 - [構文](ch02-00-syntax.md)
     - [データ型](ch02-01-data-types.md)
     - [変数](ch02-02-variable.md)
-    - [制御](ch02-03-control.md)
+    - [制御フロー](ch02-03-control.md)
     - [関数](ch02-04-function.md)
     - [コメント](ch02-05-comment.md)
     - [外部dll](ch02-06-foreign-function-interface.md)
