@@ -1,6 +1,6 @@
 # The Adelie Programming Language
 
-[はじめに](./ch00-00-introduction.md)
+[はじめに](ch00-00-introduction.md)
 
 ## 事始め
 

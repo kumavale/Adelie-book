@@ -53,10 +53,11 @@ extern {
         }
     }
 }
-#[link(name="System.Runtime.dll", publickeytoken="B0 3F 5F 7F 11 D5 0A 3A")]
+#[link(name="mscorlib.dll")]
 extern {
     mod System {
         class EventHandler {}
+        class EventArgs {}
     }
 }
 #[link(name="System.Drawing.dll", publickeytoken="B0 3F 5F 7F 11 D5 0A 3A")]
@@ -108,7 +109,7 @@ fn main() {
     form.get_Controls().Add(button);
 
     let mut count: i32 = 1;
-    button.add_Click(|| {
+    button.add_Click(|sender: Box<System::Windows::Forms::Button>, e: System::EventArgs| {
         count += 1;
         label.set_Text(count.to_string());
     });
