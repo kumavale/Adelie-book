@@ -1,7 +1,7 @@
 # Windows Forms Application
 
 <p align="center">
-    <img src="images/counter.gif" alt="counter gif" />
+    <img src="../images/counter.gif" alt="counter gif" />
 </p>
 
 Adelieでは「プロパティ」をサポートしていないため、dllからプロパティを呼び出す際には「`set_`」または「`get_`」を接頭辞にする必要があります。また、イベントハンドラの追加には「`add_`」を接頭辞にします。  
