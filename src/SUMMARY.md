@@ -15,7 +15,7 @@
     - [制御フロー](syntax/control.md)
     - [関数](syntax/function.md)
     - [コメント](syntax/comment.md)
-    - [外部dll](syntax/foreign-function-interface.md)
+    - [FFI](syntax/foreign-function-interface.md)
 
 ## 標準ライブラリ
 

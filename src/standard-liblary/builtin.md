@@ -7,15 +7,14 @@
 内部で`System.Console.Write()`を呼び出し、コンソールに標準出力を行う。  
 第一引数に`string`型を指定した場合、コンパイル時にフォーマットを検査する。
 
-| 引数                  | 説明                              |
-| :-------------------- | :-------------------------------- |
-| `print!()`            | `Write()`を呼ぶ。                 |
-| `print!(i32)`         | `Write(Int32)`を呼ぶ。            |
-| `print!(f32)`         | `Write(Single)`を呼ぶ。           |
-| `print!(bool)`        | `Write(Boolean)`を呼ぶ。          |
-| `print!(char)`        | `Write(Char)`を呼ぶ。             |
-| `print!(string)`      | `Write(String)`を呼ぶ。           |
-| `print!(string, ...)` | `Write(String, Object[])`を呼ぶ。 |
+| 引数                  | 説明                                  |
+| :-------------------- | :------------------------------------ |
+| `print!(i32)`         | `Write(Int32)`と同等の処理            |
+| `print!(f32)`         | `Write(Single)`と同等の処理           |
+| `print!(bool)`        | `Write(Boolean)`と同等の処理          |
+| `print!(char)`        | `Write(Char)`と同等の処理             |
+| `print!(string)`      | `Write(String)`と同等の処理           |
+| `print!(string, ...)` | `Write(String, Object[])`と同等の処理 |
 
 ```rust
 print!("hello");
@@ -28,15 +27,15 @@ print!("{}", 42);
 内部で`System.Console.WriteLine()`を呼び出し、コンソールに標準出力を行う。  
 第一引数に`string`型を指定した場合、コンパイル時にフォーマットを検査する。
 
-| 引数                    | 説明                                  |
-| :---------------------- | :------------------------------------ |
-| `println!()`            | `WriteLine()`を呼ぶ。                 |
-| `println!(i32)`         | `WriteLine(Int32)`を呼ぶ。            |
-| `println!(f32)`         | `WriteLine(Single)`を呼ぶ。           |
-| `println!(bool)`        | `WriteLine(Boolean)`を呼ぶ。          |
-| `println!(char)`        | `WriteLine(Char)`を呼ぶ。             |
-| `println!(string)`      | `WriteLine(String)`を呼ぶ。           |
-| `println!(string, ...)` | `WriteLine(String, Object[])`を呼ぶ。 |
+| 引数                    | 説明                                      |
+| :---------------------- | :---------------------------------------- |
+| `println!()`            | `WriteLine()`と同等の処理                 |
+| `println!(i32)`         | `WriteLine(Int32)`と同等の処理            |
+| `println!(f32)`         | `WriteLine(Single)`と同等の処理           |
+| `println!(bool)`        | `WriteLine(Boolean)`と同等の処理          |
+| `println!(char)`        | `WriteLine(Char)`と同等の処理             |
+| `println!(string)`      | `WriteLine(String)`と同等の処理           |
+| `println!(string, ...)` | `WriteLine(String, Object[])`と同等の処理 |
 
 ```rust
 println!();
@@ -87,4 +86,3 @@ assert_eq!("foo", "foo");
 panic!();
 panic!("panic with a message: {}", 42);
 ```
-
