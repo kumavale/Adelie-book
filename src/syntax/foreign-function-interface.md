@@ -1,6 +1,6 @@
 # 外部dll
 
-`extern`を使用することで、外部のdllに定義されている、`class`,`struct`,`enum`,`function`を使用することができます。
+`extern`を使用することで、外部のマネージドdllに定義されている、`class`,`struct`,`enum`,`function`を使用することができます。
 
 ```rust
 #[link(name="System.Console.dll", publickeytoken="B0 3F 5F 7F 11 D5 0A 3A")]

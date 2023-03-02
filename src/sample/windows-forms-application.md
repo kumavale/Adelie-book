@@ -8,6 +8,8 @@ Adelieでは「プロパティ」をサポートしていないため、dllか�
 
 `.ctor()`は特別な名前であり、`extern`ブロック内でのみ宣言できます。これはdllからコンストラクタを呼び出すことができます。その他、`class`、`nested class`、継承も`extern`ブロック内でのみ使用可能です。
 
+`extern`が存在感を出していますが、将来的にこの部分を外部ライブラリにすることで、使用者は`use`宣言のみで使用できるようにしたい狙いがあります。
+
 ```rust
 #[link(name="System.Windows.Forms.dll", publickeytoken="B7 7A 5C 56 19 34 E0 89")]
 extern {
