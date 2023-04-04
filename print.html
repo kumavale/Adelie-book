@@ -1,0 +1,718 @@
+<!DOCTYPE HTML>
+<html lang="ja" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>The Adelie Programming Language</title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">はじめに</a></li><li class="chapter-item expanded "><a href="getting-started/getting-started.html"><strong aria-hidden="true">1.</strong> 事始め</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="getting-started/installation.html"><strong aria-hidden="true">1.1.</strong> インストール</a></li></ol></li><li class="chapter-item expanded "><a href="syntax/syntax.html"><strong aria-hidden="true">2.</strong> 構文</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="syntax/data-types.html"><strong aria-hidden="true">2.1.</strong> データ型</a></li><li class="chapter-item "><a href="syntax/variable.html"><strong aria-hidden="true">2.2.</strong> 変数</a></li><li class="chapter-item "><a href="syntax/control.html"><strong aria-hidden="true">2.3.</strong> 制御フロー</a></li><li class="chapter-item "><a href="syntax/function.html"><strong aria-hidden="true">2.4.</strong> 関数</a></li><li class="chapter-item "><a href="syntax/comment.html"><strong aria-hidden="true">2.5.</strong> コメント</a></li><li class="chapter-item "><a href="syntax/foreign-function-interface.html"><strong aria-hidden="true">2.6.</strong> FFI</a></li></ol></li><li class="chapter-item expanded "><a href="standard-liblary/standard-liblary.html"><strong aria-hidden="true">3.</strong> 標準ライブラリ</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="standard-liblary/builtin.html"><strong aria-hidden="true">3.1.</strong> 組み込み関数</a></li><li class="chapter-item "><a href="standard-liblary/std.html"><strong aria-hidden="true">3.2.</strong> std</a></li></ol></li><li class="chapter-item expanded "><a href="sample/sample.html"><strong aria-hidden="true">4.</strong> サンプルプログラム</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="sample/hello-world.html"><strong aria-hidden="true">4.1.</strong> Hello, world!</a></li><li class="chapter-item "><a href="sample/windows-forms-application.html"><strong aria-hidden="true">4.2.</strong> Windows Forms Application</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Adelie Programming Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/kumavale/Adelie-book" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="はじめに"><a class="header" href="#はじめに">はじめに</a></h1>
+<h2 id="adelie-とは"><a class="header" href="#adelie-とは">Adelie とは</a></h2>
+<p>Adelie(アデリー)は<a href="https://dotnet.microsoft.com">.Net</a>互換の静的型付け言語です。RustとC#のメリットを活かした言語を目指しています。
+Rustは速度や安全性において非常に優れた言語ですが、GUIアプリケーションの開発は難易度が高いです。一方のC#は<code>.NET Framework</code>などの優れたライブラリが充実していますが、実行時エラーなどのバグに悩まされがちです。Adelieではそれらを組み合わせ、コンパイル時のチェックを強化した上で既存のC#ライブラリを使用することができます。</p>
+<p>基本的な文法はRustに似ているため、Rustacean<sup class="footnote-reference"><a href="#1">1</a></sup>であれば容易にコーディングすることが可能です。</p>
+<h2 id="特徴"><a class="header" href="#特徴">特徴</a></h2>
+<ul>
+<li><input disabled="" type="checkbox" checked=""/>
+強力なデータ型</li>
+<li><input disabled="" type="checkbox" checked=""/>
+既定ではimmutableな変数</li>
+<li><input disabled="" type="checkbox" checked=""/>
+型推論</li>
+<li><input disabled="" type="checkbox"/>
+トレイト</li>
+<li><input disabled="" type="checkbox"/>
+ライフタイム</li>
+<li><input disabled="" type="checkbox"/>
+所有権</li>
+<li><input disabled="" type="checkbox"/>
+パターンマッチング</li>
+</ul>
+<h2 id="影響を受けた言語との比較"><a class="header" href="#影響を受けた言語との比較">影響を受けた言語との比較</a></h2>
+<p>※開発前の機能を含む</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left"></th><th style="text-align: left">Adelie</th><th style="text-align: left">Rust</th><th style="text-align: left">C#</th></tr></thead><tbody>
+<tr><td style="text-align: left"><strong>アーキテクチャ</strong></td><td style="text-align: left">.NET</td><td style="text-align: left">ネイティブ</td><td style="text-align: left">.NET</td></tr>
+<tr><td style="text-align: left"><strong>パラダイム</strong></td><td style="text-align: left">マルチパラダイム</td><td style="text-align: left">マルチパラダイム</td><td style="text-align: left">マルチパラダイム</td></tr>
+<tr><td style="text-align: left"><strong>型付け</strong></td><td style="text-align: left">強い静的型付け</td><td style="text-align: left">強い静的型付け</td><td style="text-align: left">強い静的型付け</td></tr>
+<tr><td style="text-align: left"><strong>型推論</strong></td><td style="text-align: left">✅️</td><td style="text-align: left">✅</td><td style="text-align: left">✅</td></tr>
+<tr><td style="text-align: left"><strong>ガベージコレクション</strong></td><td style="text-align: left">✅️</td><td style="text-align: left"></td><td style="text-align: left">✅</td></tr>
+<tr><td style="text-align: left"><strong>シャドウイング</strong></td><td style="text-align: left">✅️</td><td style="text-align: left">✅️</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><strong>関数オーバーロード</strong></td><td style="text-align: left">✅️</td><td style="text-align: left">️</td><td style="text-align: left">✅</td></tr>
+<tr><td style="text-align: left"><strong>プロパティ</strong></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left">✅️</td></tr>
+<tr><td style="text-align: left"><strong>クラス継承</strong></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left">✅️</td></tr>
+<tr><td style="text-align: left"><strong>可変長引数</strong></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left">✅️</td></tr>
+<tr><td style="text-align: left"><strong>メモリ安全</strong></td><td style="text-align: left">✅️️</td><td style="text-align: left">✅️</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><strong>所有権</strong></td><td style="text-align: left">✅️</td><td style="text-align: left">✅️</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><strong>ライフタイム</strong></td><td style="text-align: left">✅️</td><td style="text-align: left">✅️</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><strong>パターンマッチング</strong></td><td style="text-align: left">✅️</td><td style="text-align: left">✅️</td><td style="text-align: left">✅</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td></tr>
+</tbody></table>
+</div>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>Rustacean: Rustを書く人のこと</p>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="事始め"><a class="header" href="#事始め">事始め</a></h1>
+<ul>
+<li>Adelieのインストール</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="インストール"><a class="header" href="#インストール">インストール</a></h1>
+<h2 id="windows10"><a class="header" href="#windows10">Windows10</a></h2>
+<h3 id="必要なもの"><a class="header" href="#必要なもの">必要なもの</a></h3>
+<ul>
+<li><a href="https://visualstudio.microsoft.com/downloads/">Visual Studio</a> (<code>ilasm.exe</code>を使用)</li>
+<li><a href="https://www.rust-lang.org/tools/install">Cargo</a></li>
+</ul>
+<h3 id="ビルド"><a class="header" href="#ビルド">ビルド</a></h3>
+<pre><code>$ git clone https://github.com/kumavale/Adelie
+</code></pre>
+<pre><code>$ make build
+</code></pre>
+<h2 id="linux"><a class="header" href="#linux">Linux</a></h2>
+<h3 id="必要なもの-1"><a class="header" href="#必要なもの-1">必要なもの</a></h3>
+<ul>
+<li><a href="https://www.mono-project.com/download/stable/">Mono</a> (<code>ilasm</code>を使用)</li>
+<li><a href="https://www.rust-lang.org/tools/install">Cargo</a></li>
+</ul>
+<h3 id="ビルド-1"><a class="header" href="#ビルド-1">ビルド</a></h3>
+<pre><code>$ git clone https://github.com/kumavale/Adelie
+</code></pre>
+<pre><code>$ make build
+</code></pre>
+<hr />
+<h2 id="近いうちにこうしたい"><a class="header" href="#近いうちにこうしたい">近いうちにこうしたい</a></h2>
+<p>現状だとMakefileを使用しないと標準ライブラリ（組み込み関数）がビルド使えない。</p>
+<pre><code>$ cargo install --git https://github.com/kumavale/Adelie
+$ adelie [file]...
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="構文"><a class="header" href="#構文">構文</a></h1>
+<p>基本的な構文を示す。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="データ型"><a class="header" href="#データ型">データ型</a></h1>
+<p>Adelieでは全てのプリミティブ型を.Net型に置き換えることができます。</p>
+<h2 id="値型"><a class="header" href="#値型">値型</a></h2>
+<h3 id="整数型"><a class="header" href="#整数型">整数型</a></h3>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Adelie</th><th style="text-align: left">範囲</th><th style="text-align: left">サイズ</th><th style="text-align: left">.NET型</th></tr></thead><tbody>
+<tr><td style="text-align: left">i32</td><td style="text-align: left">-2,147,483,648 ～ 2,147,483,647</td><td style="text-align: left">符号付き32ビット整数</td><td style="text-align: left">System.Int32</td></tr>
+<tr><td style="text-align: left">i64</td><td style="text-align: left">-9,223,372,036,854,775,808 ～ 9,223,372,036,854,775,807</td><td style="text-align: left">符号付き64ビット整数</td><td style="text-align: left">System.Int64</td></tr>
+</tbody></table>
+</div>
+<p>整数型は10進数での指定ができます。<br />
+接尾辞を付けない場合の規定は<code>i32</code>になります。</p>
+<pre><code class="language-rust">let a: i32 = 42;</code></pre>
+<h3 id="浮動小数点数型"><a class="header" href="#浮動小数点数型">浮動小数点数型</a></h3>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Adelie</th><th style="text-align: left">おおよその範囲</th><th style="text-align: left">有効桁数</th><th style="text-align: left">サイズ</th><th style="text-align: left">.NET型</th></tr></thead><tbody>
+<tr><td style="text-align: left">f32</td><td style="text-align: left">±1.5 x 10−45 から ±3.4 x 1038</td><td style="text-align: left">～6-9 桁</td><td style="text-align: left">4 バイト</td><td style="text-align: left">System.Single</td></tr>
+</tbody></table>
+</div>
+<p>接尾辞を付けない場合の規定は<code>f64</code>になります。</p>
+<pre><code class="language-rust">let a: f32 = 3.14f32;
+let b = 1.0;</code></pre>
+<h3 id="論理値型"><a class="header" href="#論理値型">論理値型</a></h3>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Adelie</th><th style="text-align: left">.NET型</th></tr></thead><tbody>
+<tr><td style="text-align: left">bool</td><td style="text-align: left">System.Boolean</td></tr>
+</tbody></table>
+</div>
+<p><code>true</code>または<code>false</code>を指定することができます。</p>
+<pre><code class="language-rust">let a: bool = true;
+let a: bool = false;</code></pre>
+<h3 id="文字型"><a class="header" href="#文字型">文字型</a></h3>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Adelie</th><th style="text-align: left">範囲</th><th style="text-align: left">サイズ</th><th style="text-align: left">.NET型</th></tr></thead><tbody>
+<tr><td style="text-align: left">char</td><td style="text-align: left">U+0000 ～ U+FFFF</td><td style="text-align: left">16ビット</td><td style="text-align: left">System.Char</td></tr>
+</tbody></table>
+</div>
+<p><code>char</code>型は内部でUnicode UTF-16文字を表します。</p>
+<p>「<code>'</code>(シングルクォート)」で囲った一文字を指定できます。</p>
+<pre><code class="language-rust">let a: char = 'a';
+let a: char = '☺';</code></pre>
+<h3 id="構造体型"><a class="header" href="#構造体型">構造体型</a></h3>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Adelie</th><th style="text-align: left">.NET型</th></tr></thead><tbody>
+<tr><td style="text-align: left">struct</td><td style="text-align: left">System.ValueType</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-rust">// 構造体定義
+struct Rectangle {
+    width: i32,
+    height: i32,
+}
+// メソッド定義
+impl Rectangle {
+    fn new(w: i32, h: i32) -&gt; Rectangle {
+        Rectangle {
+            w,
+            h,
+        }
+    }
+    fn area(&amp;self) -&gt; i32 {
+        self.width * self.height
+    }
+}
+fn main() {
+    // インスタンス化
+    let rect1: Rectangle = Rectangle::new(30, 50);
+    assert_eq!(rect1.area(), 150);
+}</code></pre>
+<h3 id="列挙型"><a class="header" href="#列挙型">列挙型</a></h3>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Adelie</th><th style="text-align: left">.NET型</th></tr></thead><tbody>
+<tr><td style="text-align: left">enum</td><td style="text-align: left">System.Enum</td></tr>
+</tbody></table>
+</div>
+<p>内部では「0」からの連番を振られた名前付き定数になります。</p>
+<pre><code class="language-rust">enum Color {
+    Red,
+    Green,
+    Blue,
+}
+fn main() {
+    let blue: Color = Color::Blue;
+    assert_eq!(blue as i32, 2);
+}</code></pre>
+<h2 id="参照型"><a class="header" href="#参照型">参照型</a></h2>
+<h3 id="文字列型"><a class="header" href="#文字列型">文字列型</a></h3>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Adelie</th><th style="text-align: left">.NET型</th></tr></thead><tbody>
+<tr><td style="text-align: left">string</td><td style="text-align: left">System.String</td></tr>
+</tbody></table>
+</div>
+<p>Adelieでは<code>string</code>型はUTF-16のシーケンスを表します。</p>
+<pre><code class="language-rust">let a: string = &quot;foo&quot;;</code></pre>
+<h3 id="box型"><a class="header" href="#box型">Box型</a></h3>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Adelie</th><th style="text-align: left">.NET型</th></tr></thead><tbody>
+<tr><td style="text-align: left">Box</td><td style="text-align: left">System.Object</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-rust">let a: Box&lt;i32&gt; = Box::new(42);
+assert_eq!(*a, 42);</code></pre>
+<h3 id="vec型"><a class="header" href="#vec型">Vec型</a></h3>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Adelie</th><th style="text-align: left">.NET型</th></tr></thead><tbody>
+<tr><td style="text-align: left">Vec</td><td style="text-align: left">System.Collections.Generic.List</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-rust">let mut a: Vec&lt;i32&gt; = Vec::new();
+a.push(42);
+assert_eq!(a[0], 42);</code></pre>
+<h3 id="クラス型"><a class="header" href="#クラス型">クラス型</a></h3>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Adelie</th><th style="text-align: left">.NET型</th></tr></thead><tbody>
+<tr><td style="text-align: left">class</td><td style="text-align: left">System.Object</td></tr>
+</tbody></table>
+</div>
+<p>後述する<code>extern</code>ブロック内でのみ宣言が可能です。</p>
+<pre><code class="language-rust">extern {
+    class Foo {
+        bar: i32
+    }
+}</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="変数"><a class="header" href="#変数">変数</a></h1>
+<h2 id="宣言と代入"><a class="header" href="#宣言と代入">宣言と代入</a></h2>
+<p>変数は<code>let</code>を使用して宣言します。<br />
+多くの場合、型名は省略可能です。</p>
+<pre><code class="language-rust">fn main() {
+    let a: i32 = 42;
+    let b = 42;
+}</code></pre>
+<p>初期化は必須ではありませんが、未初期化の状態で変数を参照することはできません。</p>
+<pre><code class="language-rust">fn main() {
+    let a: i32;
+    let b: i32 = a;  // compile error
+}</code></pre>
+<h2 id="可変性"><a class="header" href="#可変性">可変性</a></h2>
+<p>変数は標準で <strong>不変</strong> になります。</p>
+<pre><code class="language-rust">fn main() {
+    let a: i32 = 42;
+    a = 57;  // compile error
+}</code></pre>
+<p>値を変更したい場合は、<code>mut</code>キーワードを使用して可変にすることができます。</p>
+<pre><code class="language-rust">fn main() {
+    let mut a: i32 = 42;
+    a = 57;  // OK!!
+}</code></pre>
+<h2 id="シャドーイング"><a class="header" href="#シャドーイング">シャドーイング</a></h2>
+<p>スコープ毎に現れた同名の変数は前の変数を覆い隠します。<br />
+また、変数の型は同一である必要はありません。</p>
+<pre><code class="language-rust">fn main() {
+    let a: i32 = 1;
+    let a: i32 = a + 1;
+
+    {
+        let a: i32 = 5;
+        assert_eq!(a, 5);
+    }
+
+    assert_eq!(a, 2);
+}</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="制御フロー"><a class="header" href="#制御フロー">制御フロー</a></h1>
+<h2 id="if式"><a class="header" href="#if式">if式</a></h2>
+<p>Adelieの<code>if</code>は <strong>式</strong> であるため、値を返します。<br />
+<code>if</code>と<code>else</code>の型が一致している場合のみコンパイルが通り、変数に束縛することができます。</p>
+<pre><code class="language-rust">fn main() {
+    let num: i32 = 42;
+
+    if num % 15 == 0 {
+        println!(&quot;FizzBuzz&quot;);
+    } else if num % 3 == 0 {
+        println!(&quot;Fizz&quot;);
+    } else if num % 5 == 0 {
+        println!(&quot;Buzz&quot;);
+    } else {
+        println!(num);
+    }
+}</code></pre>
+<pre><code class="language-rust">fn main() {
+    let winner: bool = true;
+    let score: i32 = if winner { 33 } else { 4 };
+
+    assert_eq!(score, 33);
+}</code></pre>
+<h2 id="ループ"><a class="header" href="#ループ">ループ</a></h2>
+<p>ループには<code>loop</code>または<code>while</code>を使用できます。</p>
+<blockquote>
+<p><code>for</code>文の対応はしばしお待ちを！</p>
+</blockquote>
+<pre><code class="language-rust">fn main() {
+    loop {
+        break;
+    }
+
+    let mut i: i32 = 3;
+    while i &gt; 0 {
+        i -= 1;
+    }
+}</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="関数"><a class="header" href="#関数">関数</a></h1>
+<p><code>fn</code>から始まる文は関数宣言になります。<br />
+Adelieでは<code>main()</code>から始まる関数がエントリーポイントになります。</p>
+<pre><code class="language-rust">fn main() {
+    foo();
+}
+fn foo() {
+    println!(&quot;foo!&quot;);
+}</code></pre>
+<h2 id="引数"><a class="header" href="#引数">引数</a></h2>
+<p>仮引数名及び型名を指定することで、引数を受け取ることができます。</p>
+<pre><code class="language-rust">fn main() {
+    area(30, 50);
+}
+fn area(width: i32, height: i32) {
+    println!(width * height);
+}</code></pre>
+<h2 id="戻り値"><a class="header" href="#戻り値">戻り値</a></h2>
+<p>戻り値を指定しない場合は、<code>void</code>が返されます。<br />
+しかし、「<code>-&gt;</code>」の後に型名を指定することで、値を返すことができます。</p>
+<pre><code class="language-rust">fn main() {
+    assert_eq!(area(30, 50), 150);
+}
+fn area(width: i32, height: i32) -&gt; i32 {
+    return width * height;
+}</code></pre>
+<p>最後の式は<code>return</code>と<code>;</code>を省略することができます。</p>
+<pre><code class="language-rust">fn main() {
+    assert_eq!(area(30, 50), 150);
+}
+fn area(width: i32, height: i32) -&gt; i32 {
+    width * height
+}</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="コメント"><a class="header" href="#コメント">コメント</a></h1>
+<h2 id="行コメント"><a class="header" href="#行コメント">行コメント</a></h2>
+<p><code>//</code>から行末までの文字は行コメントになります。</p>
+<pre><code class="language-rust">// this is a comment
+println!(1 + 1);  // comment too</code></pre>
+<h2 id="ブロックコメント"><a class="header" href="#ブロックコメント">ブロックコメント</a></h2>
+<p><code>/*</code>から<code>*/</code>で囲まれた範囲の文字はブロックコメントになります。<br />
+ネスト、複数行も可能です。</p>
+<pre><code class="language-rust">/* comment */
+/*
+    /* comment
+       // comment
+    */
+*/
+println!(/* 1 + */ 1);  // 1</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="外部dll"><a class="header" href="#外部dll">外部dll</a></h1>
+<p><code>extern</code>を使用することで、外部のマネージドdllに定義されている、<code>class</code>,<code>struct</code>,<code>enum</code>,<code>function</code>を使用することができます。</p>
+<pre><code class="language-rust">#[link(name=&quot;System.Console.dll&quot;, publickeytoken=&quot;B0 3F 5F 7F 11 D5 0A 3A&quot;)]
+extern {
+    mod System {
+        struct Console {}
+        impl Console {
+            fn WriteLine(_: string) {}
+        }
+    }
+}
+
+fn main() {
+    System::Console::WriteLine(&quot;hello&quot;);
+}</code></pre>
+<p>link属性にて<code>name</code>にdll名、<code>publickeytoken</code>にパブリックキートークンを指定します。<br />
+.Netでいうところの「名前空間」は<code>mod</code>キーワードで再現します。<br />
+dll内で定義されている全てを宣言する必要はありません。Adelie側で使用する構造体名やフィールド名のみの宣言で問題ありません。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="標準ライブラリ"><a class="header" href="#標準ライブラリ">標準ライブラリ</a></h1>
+<p>Adelieの標準ライブラリについて記載する。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="組み込み関数"><a class="header" href="#組み込み関数">組み込み関数</a></h1>
+<p>組み込み関数は、識別名の後に「<code>!</code>」を付けることで呼び出すことができる。</p>
+<h2 id="print"><a class="header" href="#print"><code>print!</code></a></h2>
+<p>内部で<code>System.Console.Write()</code>を呼び出し、コンソールに標準出力を行う。<br />
+第一引数に<code>string</code>型を指定した場合、コンパイル時にフォーマットを検査する。</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">引数</th><th style="text-align: left">説明</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>print!(i32)</code></td><td style="text-align: left"><code>Write(Int32)</code>と同等の処理</td></tr>
+<tr><td style="text-align: left"><code>print!(f32)</code></td><td style="text-align: left"><code>Write(Single)</code>と同等の処理</td></tr>
+<tr><td style="text-align: left"><code>print!(bool)</code></td><td style="text-align: left"><code>Write(Boolean)</code>と同等の処理</td></tr>
+<tr><td style="text-align: left"><code>print!(char)</code></td><td style="text-align: left"><code>Write(Char)</code>と同等の処理</td></tr>
+<tr><td style="text-align: left"><code>print!(string)</code></td><td style="text-align: left"><code>Write(String)</code>と同等の処理</td></tr>
+<tr><td style="text-align: left"><code>print!(string, ...)</code></td><td style="text-align: left"><code>Write(String, Object[])</code>と同等の処理</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-rust">print!(&quot;hello&quot;);
+print!(42);
+print!(&quot;{}&quot;, 42);</code></pre>
+<h2 id="println"><a class="header" href="#println"><code>println!</code></a></h2>
+<p>内部で<code>System.Console.WriteLine()</code>を呼び出し、コンソールに標準出力を行う。<br />
+第一引数に<code>string</code>型を指定した場合、コンパイル時にフォーマットを検査する。</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">引数</th><th style="text-align: left">説明</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>println!()</code></td><td style="text-align: left"><code>WriteLine()</code>と同等の処理</td></tr>
+<tr><td style="text-align: left"><code>println!(i32)</code></td><td style="text-align: left"><code>WriteLine(Int32)</code>と同等の処理</td></tr>
+<tr><td style="text-align: left"><code>println!(f32)</code></td><td style="text-align: left"><code>WriteLine(Single)</code>と同等の処理</td></tr>
+<tr><td style="text-align: left"><code>println!(bool)</code></td><td style="text-align: left"><code>WriteLine(Boolean)</code>と同等の処理</td></tr>
+<tr><td style="text-align: left"><code>println!(char)</code></td><td style="text-align: left"><code>WriteLine(Char)</code>と同等の処理</td></tr>
+<tr><td style="text-align: left"><code>println!(string)</code></td><td style="text-align: left"><code>WriteLine(String)</code>と同等の処理</td></tr>
+<tr><td style="text-align: left"><code>println!(string, ...)</code></td><td style="text-align: left"><code>WriteLine(String, Object[])</code>と同等の処理</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-rust">println!();
+println!(&quot;hello&quot;);
+println!(42);
+println!(&quot;{}&quot;, 42);</code></pre>
+<h2 id="read_line"><a class="header" href="#read_line"><code>read_line!</code></a></h2>
+<p>内部で<code>System.Console.ReadLine()</code>を呼び出し、コンソールからの入力を待つ。</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">引数</th><th style="text-align: left">説明</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>read_line!()</code></td><td style="text-align: left"><code>ReadLine()</code>を呼び、<code>string</code>を返す。</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-rust">let input: string = read_line!();</code></pre>
+<h2 id="assert"><a class="header" href="#assert"><code>assert!</code></a></h2>
+<p>実行時に、与えられた真偽値が<code>true</code>であることをアサートする。<br />
+アサートに失敗した場合は<code>panic!</code>し、プログラムは終了する。</p>
+<pre><code class="language-rust">assert!(true);
+assert!(1 == 1);
+assert!(1 != 2);</code></pre>
+<h2 id="assert_eq"><a class="header" href="#assert_eq"><code>assert_eq!</code></a></h2>
+<p>実行時に、与えられた両辺が同値であることをアサートする。<br />
+アサートに失敗した場合は<code>panic!</code>し、プログラムは終了する。</p>
+<pre><code class="language-rust">assert_eq!(true, true);
+assert_eq!(1, 1);
+assert_eq!(&quot;foo&quot;, &quot;foo&quot;);</code></pre>
+<h2 id="panic"><a class="header" href="#panic"><code>panic!</code></a></h2>
+<p>内部で<code>System.Environment.Exit(Int32)</code>を呼び出し、現在のプログラムを終了する。</p>
+<pre><code class="language-rust">panic!();
+panic!(&quot;panic with a message: {}&quot;, 42);</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="std"><a class="header" href="#std">std</a></h1>
+<p>unimplemented!</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="サンプルプログラム"><a class="header" href="#サンプルプログラム">サンプルプログラム</a></h1>
+<ul>
+<li>「Hello, world!」を表示する最もシンプルなプログラム</li>
+<li>WindowsFormsを使用したカウンターアプリ</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="hello-world"><a class="header" href="#hello-world">Hello, world!</a></h1>
+<p>プログラムは<code>fn main()</code>から始まります。<br />
+プログラムの拡張子は「<code>.ad</code>」を推奨します。</p>
+<pre><code class="language-rust">// main.ad
+fn main() {
+    println!(&quot;Hello, world!&quot;);
+}</code></pre>
+<pre><code>$ make main.ad
+Hello, world!
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="windows-forms-application"><a class="header" href="#windows-forms-application">Windows Forms Application</a></h1>
+<p align="center">
+    <img src="sample/../images/counter.gif" alt="counter gif" />
+</p>
+<p>Adelieでは「プロパティ」をサポートしていないため、dllからプロパティを呼び出す際には「<code>set_</code>」または「<code>get_</code>」を接頭辞にする必要があります。また、イベントハンドラの追加には「<code>add_</code>」を接頭辞にします。</p>
+<p><code>.ctor()</code>は特別な名前であり、<code>extern</code>ブロック内でのみ宣言できます。これはdllからコンストラクタを呼び出すことができます。その他、<code>class</code>、<code>nested class</code>、継承も<code>extern</code>ブロック内でのみ使用可能です。</p>
+<p><code>extern</code>が存在感を出していますが、将来的にこの部分を外部ライブラリにすることで、使用者は<code>use</code>宣言のみで使用できるようにしたい狙いがあります。</p>
+<pre><code class="language-rust">#[link(name=&quot;System.Windows.Forms.dll&quot;, publickeytoken=&quot;B7 7A 5C 56 19 34 E0 89&quot;)]
+extern {
+    mod System {
+        mod Windows {
+            mod Forms {
+                class Control {
+                    class ControlCollection {}
+                    impl ControlCollection {
+                        fn Add(&amp;self, value: Control) {}
+                    }
+                }
+                impl Control {
+                    fn set_Text(&amp;self, _: string) {}
+                    fn set_Location(&amp;self, _: System::Drawing::Point) {}
+                    fn set_Size(&amp;self, _: System::Drawing::Size) {}
+                    fn set_ClientSize(&amp;self, _: System::Drawing::Size) {}
+                    fn set_Font(&amp;self, _: System::Drawing::Font) {}
+                    fn get_Controls(&amp;self) -&gt; ControlCollection {}
+                    fn add_Click(&amp;self, event: System::EventHandler) {}
+                }
+                class ScrollableControl : Control {}
+                class ContainerControl : ScrollableControl {}
+                class Form : ContainerControl {}
+                impl Form {
+                    fn .ctor() {}
+                }
+                class Label : Control {}
+                impl Label {
+                    fn .ctor() {}
+                    fn set_TextAlign(&amp;self, _: System::Drawing::ContentAlignment) {}
+                }
+                class ButtonBase : Control {}
+                class Button : ButtonBase {}
+                impl Button {
+                    fn .ctor() {}
+                }
+                class Application {}
+                impl Application {
+                    fn Run(_: Form) {}
+                }
+            }
+        }
+    }
+}
+#[link(name=&quot;mscorlib.dll&quot;)]
+extern {
+    mod System {
+        class EventHandler {}
+        class EventArgs {}
+    }
+}
+#[link(name=&quot;System.Drawing.dll&quot;, publickeytoken=&quot;B0 3F 5F 7F 11 D5 0A 3A&quot;)]
+extern {
+    mod System {
+        mod Drawing {
+            class Font {}
+            impl Font {
+                fn .ctor(familyName: string, emSize: f32) {}
+            }
+            enum ContentAlignment {
+                MiddleCenter = 32,
+            }
+        }
+    }
+}
+#[link(name=&quot;System.Drawing.Primitives.dll&quot;, publickeytoken=&quot;B0 3F 5F 7F 11 D5 0A 3A&quot;)]
+extern {
+    mod System {
+        mod Drawing {
+            struct Point {}
+            impl Point {
+                fn .ctor(x: i32, y: i32) {}
+            }
+            struct Size {}
+            impl Size {
+                fn .ctor(w: i32, h: i32) {}
+            }
+        }
+    }
+}
+fn main() {
+    let mut form: System::Windows::Forms::Form = System::Windows::Forms::Form::.ctor();
+    form.set_Text(&quot;Counter&quot;);
+    form.set_ClientSize(System::Drawing::Size::.ctor(300, 200));
+
+    let mut label: System::Windows::Forms::Label = System::Windows::Forms::Label::.ctor();
+    label.set_Text(&quot;1&quot;);
+    label.set_TextAlign(System::Drawing::ContentAlignment::MiddleCenter);
+    label.set_Size(System::Drawing::Size::.ctor(300, 64));
+    label.set_Location(System::Drawing::Point::.ctor(0, 50));
+    label.set_Font(System::Drawing::Font::.ctor(&quot;Arial&quot;, 32.0f32));
+
+    let mut button: System::Windows::Forms::Button = System::Windows::Forms::Button::.ctor();
+    button.set_Text(&quot;Click Me!&quot;);
+    button.set_Location(System::Drawing::Point::.ctor(115, 140));
+
+    form.get_Controls().Add(label);
+    form.get_Controls().Add(button);
+
+    let mut count: i32 = 1;
+    button.add_Click(|sender: Box&lt;System::Windows::Forms::Button&gt;, e: System::EventArgs| {
+        count += 1;
+        label.set_Text(count.to_string());
+    });
+
+    System::Windows::Forms::Application::Run(form);
+}</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
