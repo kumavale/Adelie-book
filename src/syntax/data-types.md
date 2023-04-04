@@ -135,6 +135,18 @@ let a: Box<i32> = Box::new(42);
 assert_eq!(*a, 42);
 ```
 
+### Vec型
+
+| Adelie | .NET型                          |
+| :----- | :------------------------------ |
+| Vec    | System.Collections.Generic.List |
+
+```rust
+let mut a: Vec<i32> = Vec::new();
+a.push(42);
+assert_eq!(a[0], 42);
+```
+
 ### クラス型
 
 | Adelie | .NET型        |
